@@ -28,11 +28,6 @@ public class UserIdentityController {
     @Autowired
     private TokenService tokenService;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> getAllFlashCard() {
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid UserDto userDto) {
         UserDto savedUser = userService.signUp(userDto);
