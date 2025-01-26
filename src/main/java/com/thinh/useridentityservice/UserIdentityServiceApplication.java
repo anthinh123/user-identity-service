@@ -9,7 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableAutoConfiguration
-@PropertySource("file:${user.dir}/application.env")
 public class UserIdentityServiceApplication {
 
 	public static void main(String[] args) {
