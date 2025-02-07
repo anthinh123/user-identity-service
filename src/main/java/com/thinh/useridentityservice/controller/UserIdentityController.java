@@ -3,6 +3,7 @@ package com.thinh.useridentityservice.controller;
 import com.thinh.useridentityservice.auth.TokenService;
 import com.thinh.useridentityservice.dto.JwtDto;
 import com.thinh.useridentityservice.dto.SignInDto;
+import com.thinh.useridentityservice.dto.SignUpResponse;
 import com.thinh.useridentityservice.dto.UserDto;
 import com.thinh.useridentityservice.entity.UserEntity;
 import com.thinh.useridentityservice.service.UserService;
@@ -29,15 +30,16 @@ public class UserIdentityController {
     private TokenService tokenService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid UserDto userDto) {
-        UserDto savedUser = userService.signUp(userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<SignUpResponse> signUp(@RequestBody @Valid UserDto userDto) {
+        System.out.println("signUp triggered ");
+        userService.signUp(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new SignUpResponse("Created"));
     }
 
     @PostMapping("/signin")
     public ResponseEntity<JwtDto> signIn(@RequestBody @Valid SignInDto data) {
+        System.out.println("signIn triggered");
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.userName(), data.password());
-        System.out.println("usernamePassword = " + usernamePassword);
         try {
             var authUser = authenticationManager.authenticate(usernamePassword);
             var accessToken = tokenService.generateAccessToken((UserEntity) authUser.getPrincipal());
